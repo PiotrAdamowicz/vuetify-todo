@@ -1,6 +1,12 @@
 # todo
 
-## Project setup
+## Vuetify Tut
+
+### Source
+
+From 'Make Apps with Danny' YT channel: [Vuetify Tutorial](https://www.youtube.com/watch?v=CjXgoYo86yY)
+
+### Project setup
 ```
 npm install
 ```
