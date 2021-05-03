@@ -6,6 +6,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     tasks: [{ id: 1, title: "Vuex State works", done: false }],
+    snackbar: {
+      show: false,
+      text: "",
+    },
   },
   mutations: {
     addTask(state, newTaskTitle) {
@@ -23,6 +27,32 @@ export default new Vuex.Store({
     deleteTask(state, id) {
       state.tasks = state.tasks.filter((task) => task.id !== id);
     },
+    showSnackbar(state, text) {
+      let timeout = 0;
+      if (state.snackbar.show) {
+        state.snackbar.show = false;
+        timeout = 300;
+      }
+      setTimeout(() => {
+        state.snackbar.show = true;
+        state.snackbar.text = text;
+      }, timeout);
+    },
+    closeSnackbar(state) {
+      state.snackbar.show = false;
+    },
   },
-  actions: {},
+  actions: {
+    //Composing Snackbar with Title of added Task
+    addTask({ commit }, newTaskTitle) {
+      commit("addTask", newTaskTitle);
+      commit("showSnackbar", `Task: '${newTaskTitle}' Added`);
+    },
+    //That kind of message could be a bit harder on delete so I'l leave it for now
+    deleteTask({ commit }, id) {
+      commit("deleteTask", id);
+      commit("showSnackbar", "Task Deleted");
+    },
+  },
+  getters: {},
 });

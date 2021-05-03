@@ -9,7 +9,6 @@
 <script>
 export default {
   name: "Todo",
-
   components: {
     "add-task-input": require("../components/Todo/AddTaskInput.vue").default,
     "tasks-list": require("../components/Todo/TasksList.vue").default,
