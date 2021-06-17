@@ -15,35 +15,38 @@
             >{{ task.title }}</v-list-item-title
           >
         </v-list-item-content>
-
+        <v-list-item-action v-if="task.dueDate">
+          <v-list-item-action-text>
+            <v-icon small>mdi-calendar </v-icon>
+            {{ task.dueDate | niceDate }}</v-list-item-action-text
+          >
+        </v-list-item-action>
         <v-list-item-action>
-          <v-btn @click.stop="dialogs.delete = true" icon>
-            <v-icon color="primary">mdi-delete</v-icon>
+          <task-menu :task="task" />
+        </v-list-item-action>
+        <v-list-item-action v-if="$store.state.sorting">
+          <v-btn color="primary" icon>
+            <v-icon>mdi-drag-horizontal-variant</v-icon>
           </v-btn>
         </v-list-item-action>
       </template>
     </v-list-item>
     <v-divider></v-divider>
-    <dialog-delete
-      @close="dialogs.delete = false"
-      :task="task"
-      v-if="dialogs.delete"
-    />
   </div>
 </template>
 
 <script>
+import { format } from "date-fns";
 export default {
   props: ["task"],
+  filters: {
+    niceDate(value) {
+      return format(new Date(value), " d MMM yyy");
+    },
+  },
   components: {
     "dialog-delete": require("./Dialogs/DialogDelete.vue").default,
-  },
-  data() {
-    return {
-      dialogs: {
-        delete: false,
-      },
-    };
+    "task-menu": require("./TaskMenu.vue").default,
   },
 };
 </script>
