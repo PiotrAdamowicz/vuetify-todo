@@ -53,6 +53,7 @@ export default {
         };
         this.$store.dispatch("editTask", paylode);
         this.$emit("close");
+        this.$vuetify.goto(0, { duration: 0 });
       }
     },
   },

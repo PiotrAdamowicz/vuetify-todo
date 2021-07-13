@@ -29,11 +29,17 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="primary" dark prominent height="170">
+    <v-app-bar
+      app
+      color="primary"
+      dark
+      prominent
+      :height="$route.path === '/' ? '238' : '170'"
+    >
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
-          gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"
+          gradient="to top right, rgba(19,84,122,.9), rgba(128,208,199,.9)"
         ></v-img>
       </template>
 
@@ -50,6 +56,9 @@
         </v-row>
         <v-row>
           <live-date />
+        </v-row>
+        <v-row v-if="$route.path === '/'">
+          <add-task-input />
         </v-row>
       </v-container>
     </v-app-bar>
@@ -73,9 +82,14 @@ export default {
     ],
   }),
   components: {
+    "add-task-input": require("./components/Todo/AddTaskInput.vue").default,
     Snackbar,
     Search,
     LiveDate,
+  },
+  mounted() {
+    this.$store.dispatch("getTasks");
+    console.log(this.$route.path);
   },
 };
 </script>
